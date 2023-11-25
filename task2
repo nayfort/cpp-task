@@ -1,0 +1,61 @@
+#include <iostream>
+#include <fstream>
+
+using namespace std;
+
+int main() {
+    setlocale(LC_ALL, "ru");
+    float a, b, h, x, y = 0, s;
+    int i, j, n;
+    
+    cout << "Enter a: ";
+    cin >> a;
+    cout << "Enter b: ";
+    cin >> b;
+
+    if (a > b) {
+        cout << "Error";
+        return 0;
+    }
+
+    cout << "input step h=";
+    cin >> h;
+
+    if (h < b - a || h <= 0) {
+        cout << "step is incorrect";
+        return 0;
+    }
+
+    cout << "\ninput n=";
+    cin >> n;
+
+    x = a;
+    ofstream fout("results.txt");
+
+    do {
+        if (x <= 0) {
+            for (int i = 2; i < n - 1; i++) {
+                y += (x / i);
+            }
+        } else if (x > 0) {
+            for (int i = 0; i < n - 1; i++) {
+                std::cout << "\n\titeration i=" << i;
+                s = 0;
+
+                for (int j = 0; j < i; j++) {
+                    s += (i / x + j);
+                }
+
+                y += s;
+
+                cout << "\n\tvalue y=" << y << " value x=" << x;
+                fout << "x:" << x << endl;
+                fout << "y:" << y << endl;
+            }
+        }
+
+        x += h;
+    } while (x <= b);
+
+    return 0;
+}
